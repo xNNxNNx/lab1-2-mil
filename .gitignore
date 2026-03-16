@@ -1,0 +1,8 @@
+﻿node_modules/
+dist/
+coverage/
+*.log
+Typescript задачи.pdf
+Typescript задачи 2.pdf
+Typescript задачи.txt
+Typescript задачи 2.txt

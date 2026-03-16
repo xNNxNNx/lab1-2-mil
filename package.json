@@ -1,0 +1,26 @@
+﻿{
+  "name": "lab1-2",
+  "version": "1.0.0",
+  "description": "Solutions for the first and second TypeScript labs",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xNNxNNx/lab1-2-mil.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/xNNxNNx/lab1-2-mil/issues"
+  },
+  "homepage": "https://github.com/xNNxNNx/lab1-2-mil#readme",
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}
