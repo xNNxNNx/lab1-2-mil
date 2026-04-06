@@ -1,0 +1,54 @@
+.forecast-list {
+  display: grid;
+  gap: 18px;
+}
+
+.forecast-list__title,
+.forecast-list__weekday,
+.forecast-list__date,
+.forecast-list__temperature,
+.forecast-list__description {
+  margin: 0;
+}
+
+.forecast-list__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 16px;
+}
+
+.forecast-list__card {
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px);
+}
+
+.forecast-list__weekday {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.forecast-list__date {
+  margin-top: 4px;
+  font-size: 13px;
+  opacity: 0.76;
+}
+
+.forecast-list__icon {
+  width: 58px;
+  height: 58px;
+  margin: 10px 0;
+}
+
+.forecast-list__temperature {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.forecast-list__description {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.45;
+  text-transform: capitalize;
+}

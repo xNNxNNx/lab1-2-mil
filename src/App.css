@@ -1,0 +1,97 @@
+:root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 32px;
+  transition: background 0.3s ease;
+}
+
+.page_theme_clear {
+  background: linear-gradient(180deg, #4f86ff 0%, #8fc3ff 100%);
+}
+
+.page_theme_clouds {
+  background: linear-gradient(180deg, #56708f 0%, #8ea0b7 100%);
+}
+
+.page_theme_rain {
+  background: linear-gradient(180deg, #2f4f73 0%, #52789e 100%);
+}
+
+.page_theme_storm {
+  background: linear-gradient(180deg, #222b45 0%, #4b4b7d 100%);
+}
+
+.page_theme_snow {
+  background: linear-gradient(180deg, #7da2c8 0%, #c4d9f3 100%);
+  color: #12253a;
+}
+
+.page_theme_mist {
+  background: linear-gradient(180deg, #6c7b8d 0%, #a9b4c1 100%);
+}
+
+.page__hero {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.page__header {
+  margin-bottom: 24px;
+}
+
+.page__eyebrow,
+.page__subtitle,
+.page__status {
+  margin: 0;
+}
+
+.page__eyebrow {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.88;
+}
+
+.page__subtitle {
+  margin-top: 12px;
+  font-size: 19px;
+  line-height: 1.5;
+  max-width: 720px;
+}
+
+.page__status {
+  margin-top: 18px;
+  font-size: 16px;
+}
+
+.page__status_error {
+  color: #ffe2e0;
+}
+
+.page__content {
+  display: grid;
+  gap: 24px;
+  margin-top: 28px;
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 20px;
+  }
+
+  .page__subtitle {
+    font-size: 17px;
+  }
+}
