@@ -1,0 +1,44 @@
+.air-quality {
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(8, 15, 24, 0.2);
+  backdrop-filter: blur(14px);
+}
+
+.air-quality__title,
+.air-quality__aqi {
+  margin: 0;
+}
+
+.air-quality__aqi {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.air-quality__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.air-quality__item {
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.air-quality__item span,
+.air-quality__item strong {
+  display: block;
+}
+
+.air-quality__item span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.air-quality__item strong {
+  margin-top: 8px;
+  font-size: 20px;
+}

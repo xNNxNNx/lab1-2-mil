@@ -1,0 +1,68 @@
+.weather-summary {
+  display: grid;
+  gap: 20px;
+}
+
+.weather-summary__eyebrow,
+.weather-summary__description,
+.weather-summary__meta,
+.weather-summary__temperature,
+.weather-summary__details {
+  margin: 0;
+}
+
+.weather-summary__eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.84;
+}
+
+.weather-summary__title {
+  margin: 10px 0 6px;
+  font-size: 40px;
+  line-height: 1.1;
+}
+
+.weather-summary__description {
+  font-size: 18px;
+  text-transform: capitalize;
+}
+
+.weather-summary__meta {
+  margin-top: 10px;
+  font-size: 14px;
+  opacity: 0.82;
+}
+
+.weather-summary__main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.weather-summary__icon {
+  width: 90px;
+  height: 90px;
+}
+
+.weather-summary__temperature {
+  font-size: 44px;
+  font-weight: 700;
+}
+
+.weather-summary__details {
+  max-width: 420px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+@media (max-width: 640px) {
+  .weather-summary__title {
+    font-size: 32px;
+  }
+
+  .weather-summary__temperature {
+    font-size: 36px;
+  }
+}

@@ -1,0 +1,59 @@
+.city-search {
+  display: grid;
+  gap: 14px;
+}
+
+.city-search__form {
+  display: flex;
+  gap: 12px;
+}
+
+.city-search__input {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.14);
+  color: inherit;
+  font-size: 16px;
+}
+
+.city-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.city-search__button {
+  padding: 14px 18px;
+  border: none;
+  border-radius: 14px;
+  background: rgba(12, 21, 31, 0.82);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.city-search__button:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.city-search__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.city-search__item {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  color: inherit;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .city-search__form {
+    flex-direction: column;
+  }
+}
