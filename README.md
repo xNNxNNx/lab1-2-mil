@@ -8,6 +8,9 @@ This repository is organized by branches:
 - `lab4` - the fourth lab in a separate branch.
 - `lab5` - the fifth lab in a separate branch.
 - `lab6` - the sixth lab in a separate branch.
+- `lab7` - the seventh lab in a separate branch.
+- `lab8` - the eighth lab in a separate branch.
+- `lab9` - the ninth lab in a separate branch.
 
 Each lab grows from `main`, so the branches stay independent and easier to review.
 
