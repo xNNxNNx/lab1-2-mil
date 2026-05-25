@@ -1,0 +1,40 @@
+.formula-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #fff;
+  border-bottom: 2px solid var(--rainbow-blue);
+  margin-bottom: 0;
+}
+
+.formula-bar__address {
+  min-width: 50px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--rainbow-yellow);
+  color: #333;
+  border-radius: 8px;
+  padding: 4px 10px;
+}
+
+.formula-bar__fx {
+  font-family: var(--font-title);
+  font-size: 22px;
+  color: var(--rainbow-blue);
+  transform: rotate(-5deg);
+  user-select: none;
+}
+
+.formula-bar__input {
+  flex: 1;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 13px;
+}
+
+.formula-bar__input:focus {
+  border-color: var(--rainbow-green);
+}

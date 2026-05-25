@@ -1,0 +1,43 @@
+.cell {
+  border: 1px solid #e0e0e0;
+  padding: 2px 4px;
+  cursor: cell;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+  font-size: 13px;
+  transition: background-color 0.1s;
+}
+
+.cell:hover {
+  background-color: #f5f5dc !important;
+}
+
+.cell--active {
+  outline: 3px solid;
+  outline-color: var(--rainbow-blue);
+  outline-offset: -2px;
+  z-index: 2;
+}
+
+.cell--range {
+  background-color: #e0f2ff !important;
+}
+
+.cell__input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  padding: 0;
+  font-size: 13px;
+  font-family: var(--font-body);
+  background: #fff;
+}
+
+.cell__text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
