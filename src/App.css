@@ -1,0 +1,144 @@
+@font-face {
+  font-family: 'SpiderMan';
+  src: url('./assets/fonts/TheAmazingSpiderMan.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --rainbow-yellow: #ffd700;
+  --rainbow-blue: #00bfff;
+  --rainbow-red: #ff6b6b;
+  --rainbow-green: #77dd77;
+  --rainbow-purple: #dda0dd;
+  --rainbow-orange: #ffb347;
+  --bg-main: #fffde7;
+  --font-title: 'SpiderMan', sans-serif;
+  --font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-main);
+  color: #333;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+}
+
+.btn-green {
+  background: var(--rainbow-green);
+  color: #fff;
+}
+
+.btn-blue {
+  background: var(--rainbow-blue);
+  color: #fff;
+}
+
+.btn-red {
+  background: var(--rainbow-red);
+  color: #fff;
+}
+
+.btn-yellow {
+  background: var(--rainbow-yellow);
+  color: #333;
+}
+
+.rainbow-border {
+  border: 3px solid transparent;
+  border-image: linear-gradient(
+      90deg,
+      var(--rainbow-yellow),
+      var(--rainbow-blue),
+      var(--rainbow-red),
+      var(--rainbow-green)
+    )
+    1;
+}
+
+.spider-title {
+  font-family: var(--font-title);
+  background: linear-gradient(
+    90deg,
+    var(--rainbow-red),
+    var(--rainbow-yellow),
+    var(--rainbow-green),
+    var(--rainbow-blue)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+input,
+select {
+  font-family: var(--font-body);
+  padding: 8px 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--rainbow-blue);
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.rotated-label {
+  display: inline-block;
+  transform: rotate(-3deg);
+  font-family: var(--font-title);
+}
