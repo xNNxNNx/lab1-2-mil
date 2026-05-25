@@ -14,6 +14,7 @@ import { setSaveStatus } from '../store/uiSlice';
 import type { SheetData } from '../types';
 import { exportToCSV, exportToJSON, importCSV } from '../utils/csv';
 import Table from '../components/Table/Table';
+import FormattingToolbar from '../components/FormattingToolbar';
 import SaveIndicator from '../components/SaveIndicator';
 import './SpreadsheetPage.css';
 
@@ -99,6 +100,7 @@ export default function SpreadsheetPage() {
         <input ref={fileInputRef} type="file" accept=".csv" onChange={handleImportCSV} hidden />
         <span className="export-label rotated-label">экспортируй данные куда хочешь! 🌍💫</span>
       </div>
+      <FormattingToolbar />
       <SaveIndicator />
       <Table
         rows={rows}

@@ -1,0 +1,79 @@
+.formatting-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #fff;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--rainbow-yellow), var(--rainbow-blue), var(--rainbow-red)) 1;
+  flex-wrap: wrap;
+}
+
+.ft-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.ft-btn:hover {
+  background: #f0f0f0;
+  border-color: var(--rainbow-blue);
+}
+
+.ft-btn--active {
+  background: var(--rainbow-blue);
+  color: #fff;
+  border-color: var(--rainbow-blue);
+}
+
+.ft-sep {
+  color: #ccc;
+  margin: 0 4px;
+  font-size: 18px;
+}
+
+.ft-label {
+  font-size: 12px;
+  color: #888;
+  margin-left: 4px;
+}
+
+.ft-colors {
+  display: flex;
+  gap: 3px;
+  margin: 0 4px;
+}
+
+.ft-color-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s;
+}
+
+.ft-color-swatch:hover {
+  transform: scale(1.2);
+}
+
+.ft-color-swatch--active {
+  border-color: #333;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.ft-select {
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
