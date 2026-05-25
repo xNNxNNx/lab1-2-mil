@@ -15,21 +15,15 @@ const initialState: DocumentsState = {
   error: null,
 };
 
-export const fetchDocuments = createAsyncThunk(
-  'documents/fetchAll',
-  async (userId: string) => {
-    const { getDocuments } = await import('../api/documentsApi');
-    return getDocuments(userId);
-  },
-);
+export const fetchDocuments = createAsyncThunk('documents/fetchAll', async (userId: string) => {
+  const { getDocuments } = await import('../api/documentsApi');
+  return getDocuments(userId);
+});
 
-export const fetchDocument = createAsyncThunk(
-  'documents/fetchOne',
-  async (id: string) => {
-    const { getDocument } = await import('../api/documentsApi');
-    return getDocument(id);
-  },
-);
+export const fetchDocument = createAsyncThunk('documents/fetchOne', async (id: string) => {
+  const { getDocument } = await import('../api/documentsApi');
+  return getDocument(id);
+});
 
 export const createDocument = createAsyncThunk(
   'documents/create',
@@ -39,22 +33,16 @@ export const createDocument = createAsyncThunk(
   },
 );
 
-export const saveDocument = createAsyncThunk(
-  'documents/save',
-  async (doc: SpreadsheetDocument) => {
-    const { updateDocument } = await import('../api/documentsApi');
-    return updateDocument(doc.id, doc);
-  },
-);
+export const saveDocument = createAsyncThunk('documents/save', async (doc: SpreadsheetDocument) => {
+  const { updateDocument } = await import('../api/documentsApi');
+  return updateDocument(doc.id, doc);
+});
 
-export const deleteDocument = createAsyncThunk(
-  'documents/delete',
-  async (id: string) => {
-    const { deleteDoc } = await import('../api/documentsApi');
-    await deleteDoc(id);
-    return id;
-  },
-);
+export const deleteDocument = createAsyncThunk('documents/delete', async (id: string) => {
+  const { deleteDoc } = await import('../api/documentsApi');
+  await deleteDoc(id);
+  return id;
+});
 
 export const renameDocument = createAsyncThunk(
   'documents/rename',
@@ -64,15 +52,12 @@ export const renameDocument = createAsyncThunk(
   },
 );
 
-export const duplicateDocument = createAsyncThunk(
-  'documents/duplicate',
-  async (id: string) => {
-    const { getDocument, createDoc } = await import('../api/documentsApi');
-    const original = await getDocument(id);
-    const copy = { ...original, title: `${original.title} (копия)` };
-    return createDoc(copy);
-  },
-);
+export const duplicateDocument = createAsyncThunk('documents/duplicate', async (id: string) => {
+  const { getDocument, createDoc } = await import('../api/documentsApi');
+  const original = await getDocument(id);
+  const copy = { ...original, title: `${original.title} (копия)` };
+  return createDoc(copy);
+});
 
 const documentsSlice = createSlice({
   name: 'documents',

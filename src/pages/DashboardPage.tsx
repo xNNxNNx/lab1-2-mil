@@ -1,7 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchDocuments, createDocument, deleteDocument, renameDocument, duplicateDocument } from '../store/documentsSlice';
+import {
+  fetchDocuments,
+  createDocument,
+  deleteDocument,
+  renameDocument,
+  duplicateDocument,
+} from '../store/documentsSlice';
 import { openCreateModal, closeCreateModal } from '../store/uiSlice';
 import DocumentCard from '../components/DocumentCard';
 import CreateDocModal from '../components/CreateDocModal';
@@ -51,10 +57,7 @@ export default function DashboardPage() {
       </div>
 
       {showCreateModal && (
-        <CreateDocModal
-          onClose={() => dispatch(closeCreateModal())}
-          onCreate={handleCreate}
-        />
+        <CreateDocModal onClose={() => dispatch(closeCreateModal())} onCreate={handleCreate} />
       )}
     </div>
   );

@@ -27,7 +27,8 @@ export async function getDocument(id: string): Promise<SpreadsheetDocument> {
 }
 
 export async function createDoc(
-  data: Omit<SpreadsheetDocument, 'id' | 'createdAt' | 'updatedAt'> & Partial<Pick<SpreadsheetDocument, 'id' | 'createdAt' | 'updatedAt'>>,
+  data: Omit<SpreadsheetDocument, 'id' | 'createdAt' | 'updatedAt'> &
+    Partial<Pick<SpreadsheetDocument, 'id' | 'createdAt' | 'updatedAt'>>,
 ): Promise<SpreadsheetDocument> {
   const docs = loadDocs();
   const now = new Date().toISOString();

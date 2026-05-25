@@ -73,7 +73,12 @@ const Cell = memo(function Cell({
     fontWeight: data?.bold ? 'bold' : 'normal',
     fontStyle: data?.italic ? 'italic' : 'normal',
     textDecoration: data?.underline ? 'underline' : 'none',
-    backgroundColor: isInRange && !data?.bgColor ? '#e0f2ff' : (data?.bgColor && data.bgColor !== 'transparent' ? data.bgColor : undefined),
+    backgroundColor:
+      isInRange && !data?.bgColor
+        ? '#e0f2ff'
+        : data?.bgColor && data.bgColor !== 'transparent'
+          ? data.bgColor
+          : undefined,
     color: data?.textColor || '#333',
     textAlign: data?.align || 'left',
   };

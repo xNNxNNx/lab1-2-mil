@@ -12,7 +12,14 @@
   padding: 10px 24px;
   background: #fff;
   border-bottom: 3px solid transparent;
-  border-image: linear-gradient(90deg, var(--rainbow-yellow), var(--rainbow-blue), var(--rainbow-red), var(--rainbow-green)) 1;
+  border-image: linear-gradient(
+      90deg,
+      var(--rainbow-yellow),
+      var(--rainbow-blue),
+      var(--rainbow-red),
+      var(--rainbow-green)
+    )
+    1;
   flex-wrap: wrap;
 }
 

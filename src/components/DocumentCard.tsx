@@ -66,10 +66,24 @@ export default function DocumentCard({ doc, onOpen, onRename, onDuplicate, onDel
       </table>
 
       <div className="doc-card__actions">
-        <button className="btn-blue" onClick={onOpen}>📂 Открыть</button>
-        <button className="btn-yellow" onClick={() => { setRenameValue(doc.title); setIsRenaming(true); }}>✏️</button>
-        <button className="btn-green" onClick={onDuplicate}>📋</button>
-        <button className="btn-red" onClick={onDelete}>🗑️</button>
+        <button className="btn-blue" onClick={onOpen}>
+          📂 Открыть
+        </button>
+        <button
+          className="btn-yellow"
+          onClick={() => {
+            setRenameValue(doc.title);
+            setIsRenaming(true);
+          }}
+        >
+          ✏️
+        </button>
+        <button className="btn-green" onClick={onDuplicate}>
+          📋
+        </button>
+        <button className="btn-red" onClick={onDelete}>
+          🗑️
+        </button>
       </div>
     </div>
   );

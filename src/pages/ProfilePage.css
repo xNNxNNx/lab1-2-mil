@@ -13,7 +13,14 @@
 .profile-card {
   background: #fff;
   border: 3px solid transparent;
-  border-image: linear-gradient(135deg, var(--rainbow-yellow), var(--rainbow-blue), var(--rainbow-red), var(--rainbow-green)) 1;
+  border-image: linear-gradient(
+      135deg,
+      var(--rainbow-yellow),
+      var(--rainbow-blue),
+      var(--rainbow-red),
+      var(--rainbow-green)
+    )
+    1;
   border-radius: 16px;
   padding: 28px;
 }

@@ -27,7 +27,10 @@ describe('hotkeys logic (unit)', () => {
   it('setCellFormat applies bold', () => {
     const store = configureStore({ reducer: { spreadsheet: spreadsheetReducer } });
     store.dispatch(setCellValue({ key: '0:0', value: 'test' }));
-    store.dispatch({ type: 'spreadsheet/setCellFormat', payload: { key: '0:0', format: { bold: true } } });
+    store.dispatch({
+      type: 'spreadsheet/setCellFormat',
+      payload: { key: '0:0', format: { bold: true } },
+    });
 
     expect(store.getState().spreadsheet.cells['0:0'].bold).toBe(true);
   });

@@ -1,6 +1,11 @@
 import { useState, useCallback, useRef, useMemo } from 'react';
 import type { SheetData, ColumnWidths, RowHeights } from '../../types';
-import { colIndexToLetter, getCellKey, getDefaultCell, parseCellKey } from '../../utils/cellHelpers';
+import {
+  colIndexToLetter,
+  getCellKey,
+  getDefaultCell,
+  parseCellKey,
+} from '../../utils/cellHelpers';
 import { evaluateFormula } from '../../utils/formulas';
 import Cell from './Cell';
 import FormulaBar from './FormulaBar';
@@ -11,8 +16,16 @@ const DEFAULT_COL_WIDTH = 100;
 const DEFAULT_ROW_HEIGHT = 32;
 const RAINBOW = ['#FFD700', '#00BFFF', '#FF6B6B', '#77DD77'];
 const ROW_EMOJIS: Record<number, string> = {
-  10: '⭐', 20: '🌟', 30: '💫', 40: '✨', 50: '🎯',
-  60: '🌈', 70: '🎪', 80: '🎨', 90: '🎭', 100: '🏆',
+  10: '⭐',
+  20: '🌟',
+  30: '💫',
+  40: '✨',
+  50: '🎯',
+  60: '🌈',
+  70: '🎪',
+  80: '🎨',
+  90: '🎭',
+  100: '🏆',
 };
 
 interface TableProps {
@@ -51,14 +64,22 @@ export default function Table({
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollTop, setScrollTop] = useState(0);
   const [containerHeight, setContainerHeight] = useState(600);
-  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; row: number; col: number } | null>(null);
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    row: number;
+    col: number;
+  } | null>(null);
 
-  const handleContextMenu = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!activeCell) return;
-    const parsed = parseCellKey(activeCell);
-    setContextMenu({ x: e.clientX, y: e.clientY, row: parsed.row, col: parsed.col });
-  }, [activeCell]);
+  const handleContextMenu = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      if (!activeCell) return;
+      const parsed = parseCellKey(activeCell);
+      setContextMenu({ x: e.clientX, y: e.clientY, row: parsed.row, col: parsed.col });
+    },
+    [activeCell],
+  );
 
   // Ресайз столбцов
   const resizingCol = useRef<{ col: number; startX: number; startW: number } | null>(null);
@@ -121,35 +142,41 @@ export default function Table({
     }
   };
 
-  const handleSelect = useCallback((key: string, shift: boolean) => {
-    if (shift && rangeStart) {
-      // вычислить диапазон
-      const s = parseCellKey(rangeStart);
-      const e = parseCellKey(key);
-      const keys: string[] = [];
-      for (let r = Math.min(s.row, e.row); r <= Math.max(s.row, e.row); r++) {
-        for (let c = Math.min(s.col, e.col); c <= Math.max(s.col, e.col); c++) {
-          keys.push(getCellKey(r, c));
+  const handleSelect = useCallback(
+    (key: string, shift: boolean) => {
+      if (shift && rangeStart) {
+        // вычислить диапазон
+        const s = parseCellKey(rangeStart);
+        const e = parseCellKey(key);
+        const keys: string[] = [];
+        for (let r = Math.min(s.row, e.row); r <= Math.max(s.row, e.row); r++) {
+          for (let c = Math.min(s.col, e.col); c <= Math.max(s.col, e.col); c++) {
+            keys.push(getCellKey(r, c));
+          }
         }
+        setRangeKeys(keys);
+      } else {
+        setRangeStart(key);
+        setRangeKeys([]);
       }
-      setRangeKeys(keys);
-    } else {
-      setRangeStart(key);
-      setRangeKeys([]);
-    }
-    setActiveCell(key);
-    const cell = cells[key];
-    setFormulaValue(cell?.value ?? '');
-  }, [cells, rangeStart]);
+      setActiveCell(key);
+      const cell = cells[key];
+      setFormulaValue(cell?.value ?? '');
+    },
+    [cells, rangeStart],
+  );
 
-  const handleEdit = useCallback((key: string, value: string) => {
-    const newCells = { ...cells };
-    const existing = cells[key] ?? getDefaultCell();
-    const computed = value.startsWith('=') ? evaluateFormula(value, cells) : value;
-    newCells[key] = { ...existing, value, computed };
-    onCellsChange(newCells);
-    setFormulaValue(value);
-  }, [cells, onCellsChange]);
+  const handleEdit = useCallback(
+    (key: string, value: string) => {
+      const newCells = { ...cells };
+      const existing = cells[key] ?? getDefaultCell();
+      const computed = value.startsWith('=') ? evaluateFormula(value, cells) : value;
+      newCells[key] = { ...existing, value, computed };
+      onCellsChange(newCells);
+      setFormulaValue(value);
+    },
+    [cells, onCellsChange],
+  );
 
   const handleFormulaCommit = useCallback(() => {
     if (activeCell) {
@@ -190,10 +217,7 @@ export default function Table({
                   }}
                 >
                   {colIndexToLetter(c)}
-                  <div
-                    className="col-resizer"
-                    onMouseDown={(e) => handleColResizeStart(c, e)}
-                  />
+                  <div className="col-resizer" onMouseDown={(e) => handleColResizeStart(c, e)} />
                 </th>
               ))}
             </tr>
@@ -212,11 +236,9 @@ export default function Table({
               return (
                 <tr key={r}>
                   <td className="header-row" style={{ height: rh }}>
-                    {rowNum}{emoji && ` ${emoji}`}
-                    <div
-                      className="row-resizer"
-                      onMouseDown={(e) => handleRowResizeStart(r, e)}
-                    />
+                    {rowNum}
+                    {emoji && ` ${emoji}`}
+                    <div className="row-resizer" onMouseDown={(e) => handleRowResizeStart(r, e)} />
                   </td>
                   {Array.from({ length: cols }, (_, c) => {
                     const key = getCellKey(r, c);

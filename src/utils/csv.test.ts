@@ -6,8 +6,8 @@ import type { SheetData, SpreadsheetDocument } from '../types';
 describe('csv utilities', () => {
   it('exportToCSV should produce proper CSV string', () => {
     const cells: SheetData = {
-      'A1': { ...getDefaultCell(), value: 'Hello', computed: 'Hello' },
-      'B1': { ...getDefaultCell(), value: '42', computed: '42' },
+      A1: { ...getDefaultCell(), value: 'Hello', computed: 'Hello' },
+      B1: { ...getDefaultCell(), value: '42', computed: '42' },
     };
     const csv = exportToCSV(cells, 2, 2);
     const lines = csv.split('\n');
@@ -36,7 +36,7 @@ describe('csv utilities', () => {
       rows: 10,
       cols: 5,
       cells: {
-        'A1': { ...getDefaultCell(), value: '1', computed: '1' },
+        A1: { ...getDefaultCell(), value: '1', computed: '1' },
       },
       createdAt: '2024-01-01T00:00:00Z',
       updatedAt: '2024-01-01T00:00:00Z',

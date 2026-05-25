@@ -19,12 +19,18 @@ export default function AppLayout() {
       <header className="app-header">
         <h1 className="app-logo spider-title">🕷️ Табличкин</h1>
         <nav className="app-nav">
-          <NavLink to="/dashboard" className="app-nav__link">📋 Мои таблички</NavLink>
-          <NavLink to="/profile" className="app-nav__link">👤 Профиль</NavLink>
+          <NavLink to="/dashboard" className="app-nav__link">
+            📋 Мои таблички
+          </NavLink>
+          <NavLink to="/profile" className="app-nav__link">
+            👤 Профиль
+          </NavLink>
         </nav>
         <div className="app-header__user">
           <span>😊 {user?.name || 'Гость'}</span>
-          <button className="btn-red app-header__logout" onClick={handleLogout}>🚪 Выйти</button>
+          <button className="btn-red app-header__logout" onClick={handleLogout}>
+            🚪 Выйти
+          </button>
         </div>
       </header>
       <Breadcrumbs />

@@ -30,10 +30,7 @@ const uiSlice = createSlice({
     setDeleteConfirm(state, action: PayloadAction<string | null>) {
       state.showDeleteConfirm = action.payload;
     },
-    showNotification(
-      state,
-      action: PayloadAction<{ message: string; type: 'success' | 'error' }>,
-    ) {
+    showNotification(state, action: PayloadAction<{ message: string; type: 'success' | 'error' }>) {
       state.notification = action.payload;
     },
     clearNotification(state) {

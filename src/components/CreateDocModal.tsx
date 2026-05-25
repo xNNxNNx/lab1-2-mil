@@ -45,12 +45,22 @@ export default function CreateDocModal({ onClose, onCreate }: Props) {
           </div>
           <div className="modal-field">
             <label>Столбцы</label>
-            <input type="number" value={cols} onChange={(e) => setCols(+e.target.value)} min={1} max={26} />
+            <input
+              type="number"
+              value={cols}
+              onChange={(e) => setCols(+e.target.value)}
+              min={1}
+              max={26}
+            />
           </div>
         </div>
         <div className="modal-actions">
-          <button className="btn-green" onClick={handleSubmit}>Создать! 🚀</button>
-          <button style={{ background: '#ccc', color: '#333' }} onClick={onClose}>Отмена</button>
+          <button className="btn-green" onClick={handleSubmit}>
+            Создать! 🚀
+          </button>
+          <button style={{ background: '#ccc', color: '#333' }} onClick={onClose}>
+            Отмена
+          </button>
         </div>
       </div>
     </div>

@@ -70,7 +70,16 @@ export default function SpreadsheetPage() {
   };
 
   const handleExportJSON = () => {
-    const json = exportToJSON({ id: '', title: '', rows, cols, cells, createdAt: '', updatedAt: '', userId: '' });
+    const json = exportToJSON({
+      id: '',
+      title: '',
+      rows,
+      cols,
+      cells,
+      createdAt: '',
+      updatedAt: '',
+      userId: '',
+    });
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -96,9 +105,15 @@ export default function SpreadsheetPage() {
   return (
     <div className="spreadsheet-page">
       <div className="export-bar">
-        <button className="btn-blue" onClick={handleExportCSV}>📥 Скачать CSV</button>
-        <button className="btn-green" onClick={handleExportJSON}>📥 Скачать JSON</button>
-        <button className="btn-yellow" onClick={() => fileInputRef.current?.click()}>📤 Загрузить CSV</button>
+        <button className="btn-blue" onClick={handleExportCSV}>
+          📥 Скачать CSV
+        </button>
+        <button className="btn-green" onClick={handleExportJSON}>
+          📥 Скачать JSON
+        </button>
+        <button className="btn-yellow" onClick={() => fileInputRef.current?.click()}>
+          📤 Загрузить CSV
+        </button>
         <input ref={fileInputRef} type="file" accept=".csv" onChange={handleImportCSV} hidden />
         <span className="export-label rotated-label">экспортируй данные куда хочешь! 🌍💫</span>
       </div>

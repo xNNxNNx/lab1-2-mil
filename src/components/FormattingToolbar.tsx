@@ -4,8 +4,26 @@ import { getDefaultCell } from '../utils/cellHelpers';
 import type { CellData } from '../types';
 import './FormattingToolbar.css';
 
-const COLORS = ['#000000', '#FF6B6B', '#FFD700', '#77DD77', '#00BFFF', '#9B59B6', '#FF9F43', '#FFFFFF'];
-const BG_COLORS = ['transparent', '#FFF9C4', '#FFCDD2', '#C8E6C9', '#B3E5FC', '#E1BEE7', '#FFE0B2', '#F5F5F5'];
+const COLORS = [
+  '#000000',
+  '#FF6B6B',
+  '#FFD700',
+  '#77DD77',
+  '#00BFFF',
+  '#9B59B6',
+  '#FF9F43',
+  '#FFFFFF',
+];
+const BG_COLORS = [
+  'transparent',
+  '#FFF9C4',
+  '#FFCDD2',
+  '#C8E6C9',
+  '#B3E5FC',
+  '#E1BEE7',
+  '#FFE0B2',
+  '#F5F5F5',
+];
 
 export default function FormattingToolbar() {
   const dispatch = useAppDispatch();
@@ -21,7 +39,8 @@ export default function FormattingToolbar() {
   const current = getActiveCell();
 
   const applyFormat = (format: Partial<CellData>) => {
-    const keys = selectedRange && selectedRange.length > 0 ? selectedRange : activeKey ? [activeKey] : [];
+    const keys =
+      selectedRange && selectedRange.length > 0 ? selectedRange : activeKey ? [activeKey] : [];
     for (const key of keys) {
       dispatch(setCellFormat({ key, format }));
     }
@@ -57,17 +76,23 @@ export default function FormattingToolbar() {
         className={`ft-btn ${current.align === 'left' ? 'ft-btn--active' : ''}`}
         title="По левому краю"
         onClick={() => applyFormat({ align: 'left' })}
-      >⬅️</button>
+      >
+        ⬅️
+      </button>
       <button
         className={`ft-btn ${current.align === 'center' ? 'ft-btn--active' : ''}`}
         title="По центру"
         onClick={() => applyFormat({ align: 'center' })}
-      >↔️</button>
+      >
+        ↔️
+      </button>
       <button
         className={`ft-btn ${current.align === 'right' ? 'ft-btn--active' : ''}`}
         title="По правому краю"
         onClick={() => applyFormat({ align: 'right' })}
-      >➡️</button>
+      >
+        ➡️
+      </button>
 
       <span className="ft-sep">|</span>
 

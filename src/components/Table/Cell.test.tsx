@@ -21,36 +21,44 @@ function makeCell(overrides: Partial<CellData> = {}): CellData {
 describe('Cell', () => {
   it('renders cell value', () => {
     render(
-      <table><tbody><tr>
-        <Cell
-          cellKey="0:0"
-          data={makeCell({ value: 'hello', computed: 'hello' })}
-          isActive={false}
-          isInRange={false}
-          width={100}
-          height={28}
-          onSelect={vi.fn()}
-          onEdit={vi.fn()}
-        />
-      </tr></tbody></table>,
+      <table>
+        <tbody>
+          <tr>
+            <Cell
+              cellKey="0:0"
+              data={makeCell({ value: 'hello', computed: 'hello' })}
+              isActive={false}
+              isInRange={false}
+              width={100}
+              height={28}
+              onSelect={vi.fn()}
+              onEdit={vi.fn()}
+            />
+          </tr>
+        </tbody>
+      </table>,
     );
     expect(screen.getByText('hello')).toBeTruthy();
   });
 
   it('enters edit mode on double-click', () => {
     render(
-      <table><tbody><tr>
-        <Cell
-          cellKey="0:0"
-          data={makeCell({ value: 'hello', computed: 'hello' })}
-          isActive={true}
-          isInRange={false}
-          width={100}
-          height={28}
-          onSelect={vi.fn()}
-          onEdit={vi.fn()}
-        />
-      </tr></tbody></table>,
+      <table>
+        <tbody>
+          <tr>
+            <Cell
+              cellKey="0:0"
+              data={makeCell({ value: 'hello', computed: 'hello' })}
+              isActive={true}
+              isInRange={false}
+              width={100}
+              height={28}
+              onSelect={vi.fn()}
+              onEdit={vi.fn()}
+            />
+          </tr>
+        </tbody>
+      </table>,
     );
 
     fireEvent.doubleClick(screen.getByText('hello'));
@@ -61,18 +69,22 @@ describe('Cell', () => {
   it('calls onEdit when editing is committed', () => {
     const onEdit = vi.fn();
     render(
-      <table><tbody><tr>
-        <Cell
-          cellKey="0:0"
-          data={makeCell({ value: '', computed: '' })}
-          isActive={true}
-          isInRange={false}
-          width={100}
-          height={28}
-          onSelect={vi.fn()}
-          onEdit={onEdit}
-        />
-      </tr></tbody></table>,
+      <table>
+        <tbody>
+          <tr>
+            <Cell
+              cellKey="0:0"
+              data={makeCell({ value: '', computed: '' })}
+              isActive={true}
+              isInRange={false}
+              width={100}
+              height={28}
+              onSelect={vi.fn()}
+              onEdit={onEdit}
+            />
+          </tr>
+        </tbody>
+      </table>,
     );
 
     const td = screen.getByRole('cell');
@@ -85,18 +97,22 @@ describe('Cell', () => {
 
   it('applies bold style', () => {
     render(
-      <table><tbody><tr>
-        <Cell
-          cellKey="0:0"
-          data={makeCell({ value: 'bold', computed: 'bold', bold: true })}
-          isActive={false}
-          isInRange={false}
-          width={100}
-          height={28}
-          onSelect={vi.fn()}
-          onEdit={vi.fn()}
-        />
-      </tr></tbody></table>,
+      <table>
+        <tbody>
+          <tr>
+            <Cell
+              cellKey="0:0"
+              data={makeCell({ value: 'bold', computed: 'bold', bold: true })}
+              isActive={false}
+              isInRange={false}
+              width={100}
+              height={28}
+              onSelect={vi.fn()}
+              onEdit={vi.fn()}
+            />
+          </tr>
+        </tbody>
+      </table>,
     );
     const td = screen.getByRole('cell');
     expect(td.style.fontWeight).toBe('bold');
@@ -105,18 +121,22 @@ describe('Cell', () => {
   it('calls onSelect on click', () => {
     const onSelect = vi.fn();
     render(
-      <table><tbody><tr>
-        <Cell
-          cellKey="0:0"
-          data={makeCell()}
-          isActive={false}
-          isInRange={false}
-          width={100}
-          height={28}
-          onSelect={onSelect}
-          onEdit={vi.fn()}
-        />
-      </tr></tbody></table>,
+      <table>
+        <tbody>
+          <tr>
+            <Cell
+              cellKey="0:0"
+              data={makeCell()}
+              isActive={false}
+              isInRange={false}
+              width={100}
+              height={28}
+              onSelect={onSelect}
+              onEdit={vi.fn()}
+            />
+          </tr>
+        </tbody>
+      </table>,
     );
     fireEvent.click(screen.getByRole('cell'));
     expect(onSelect).toHaveBeenCalledWith('0:0', false);

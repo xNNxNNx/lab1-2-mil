@@ -37,7 +37,10 @@ export function importCSV(csvString: string): { cells: SheetData; rows: number; 
     const values = lines[r].split(',');
     maxCols = Math.max(maxCols, values.length);
     for (let c = 0; c < values.length; c++) {
-      const val = values[c].trim().replace(/^"(.*)"$/, '$1').replace(/""/g, '"');
+      const val = values[c]
+        .trim()
+        .replace(/^"(.*)"$/, '$1')
+        .replace(/""/g, '"');
       if (val) {
         const key = getCellKey(r, c);
         cells[key] = { ...getDefaultCell(), value: val, computed: val };

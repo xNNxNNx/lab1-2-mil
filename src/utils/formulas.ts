@@ -9,11 +9,7 @@ function getCellNumericValue(key: string, cells: SheetData): number {
   return isNaN(num) ? 0 : num;
 }
 
-function handleSumOrAverage(
-  fnName: string,
-  argsStr: string,
-  cells: SheetData,
-): string {
+function handleSumOrAverage(fnName: string, argsStr: string, cells: SheetData): string {
   const keys = expandRange(argsStr.trim());
   const values = keys.map((k) => getCellNumericValue(k, cells));
   const sum = values.reduce((a, b) => a + b, 0);

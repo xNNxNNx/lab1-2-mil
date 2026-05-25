@@ -21,9 +21,7 @@ export default function FormulaBar({
 
   return (
     <div className="formula-bar">
-      <div className="formula-bar__address">
-        {activeCellKey || '—'}
-      </div>
+      <div className="formula-bar__address">{activeCellKey || '—'}</div>
       <div className="formula-bar__fx">fx</div>
       <input
         className="formula-bar__input"

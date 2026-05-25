@@ -22,12 +22,20 @@ export default function ProfilePage() {
   };
 
   const handlePasswordChange = async () => {
-    if (newPass.length < 8) { setMsg('Новый пароль минимум 8 символов 🔑'); return; }
-    if (newPass !== confirmPass) { setMsg('Пароли не совпадают 🔐'); return; }
+    if (newPass.length < 8) {
+      setMsg('Новый пароль минимум 8 символов 🔑');
+      return;
+    }
+    if (newPass !== confirmPass) {
+      setMsg('Пароли не совпадают 🔐');
+      return;
+    }
     const result = await dispatch(changePassword({ oldPassword: oldPass, newPassword: newPass }));
     if (changePassword.fulfilled.match(result)) {
       setMsg('Пароль изменён! ✅');
-      setOldPass(''); setNewPass(''); setConfirmPass('');
+      setOldPass('');
+      setNewPass('');
+      setConfirmPass('');
     } else {
       setMsg('Ошибка смены пароля 😓');
     }
@@ -48,22 +56,46 @@ export default function ProfilePage() {
         </div>
 
         <div className="profile-stats">
-          <p>📄 Документов: {docCount} {docCount > 5 ? '🏆' : docCount === 0 ? '🌱' : ''}</p>
-          <p>🗓️ С нами с: {user?.registeredAt ? new Date(user.registeredAt).toLocaleDateString('ru-RU') : '—'}</p>
+          <p>
+            📄 Документов: {docCount} {docCount > 5 ? '🏆' : docCount === 0 ? '🌱' : ''}
+          </p>
+          <p>
+            🗓️ С нами с:{' '}
+            {user?.registeredAt ? new Date(user.registeredAt).toLocaleDateString('ru-RU') : '—'}
+          </p>
         </div>
 
         <div className="profile-section">
           <h3>✏️ Изменить имя</h3>
           <input value={name} onChange={(e) => setName(e.target.value)} />
-          <button className="btn-green" onClick={handleNameSave}>💾 Сохранить</button>
+          <button className="btn-green" onClick={handleNameSave}>
+            💾 Сохранить
+          </button>
         </div>
 
         <div className="profile-section">
           <h3>🔑 Сменить пароль</h3>
-          <input type="password" placeholder="Старый пароль" value={oldPass} onChange={(e) => setOldPass(e.target.value)} />
-          <input type="password" placeholder="Новый пароль" value={newPass} onChange={(e) => setNewPass(e.target.value)} />
-          <input type="password" placeholder="Подтверди новый" value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)} />
-          <button className="btn-blue" onClick={handlePasswordChange}>🔄 Сменить</button>
+          <input
+            type="password"
+            placeholder="Старый пароль"
+            value={oldPass}
+            onChange={(e) => setOldPass(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Новый пароль"
+            value={newPass}
+            onChange={(e) => setNewPass(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Подтверди новый"
+            value={confirmPass}
+            onChange={(e) => setConfirmPass(e.target.value)}
+          />
+          <button className="btn-blue" onClick={handlePasswordChange}>
+            🔄 Сменить
+          </button>
         </div>
 
         {msg && <p className="profile-msg">{msg}</p>}

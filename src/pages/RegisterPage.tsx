@@ -19,10 +19,22 @@ export default function RegisterPage() {
     e.preventDefault();
     setValidError('');
 
-    if (!name.trim()) { setValidError('Введи имя 👤'); return; }
-    if (!/\S+@\S+\.\S+/.test(email)) { setValidError('Введи корректный email 📧'); return; }
-    if (password.length < 8) { setValidError('Пароль минимум 8 символов 🔑'); return; }
-    if (password !== confirm) { setValidError('Пароли не совпадают 🔐'); return; }
+    if (!name.trim()) {
+      setValidError('Введи имя 👤');
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setValidError('Введи корректный email 📧');
+      return;
+    }
+    if (password.length < 8) {
+      setValidError('Пароль минимум 8 символов 🔑');
+      return;
+    }
+    if (password !== confirm) {
+      setValidError('Пароли не совпадают 🔐');
+      return;
+    }
 
     const result = await dispatch(registerUser({ name, email, password }));
     if (registerUser.fulfilled.match(result)) {
@@ -35,8 +47,7 @@ export default function RegisterPage() {
       <form className="login-form" onSubmit={handleSubmit}>
         <h1 className="login-title">
           <span style={{ color: 'var(--rainbow-yellow)' }}>Добро</span>{' '}
-          <span style={{ color: 'var(--rainbow-green)' }}>пожаловать!</span>{' '}
-          🎉🥳
+          <span style={{ color: 'var(--rainbow-green)' }}>пожаловать!</span> 🎉🥳
         </h1>
         <div className="login-field">
           <label>👤 Имя</label>
@@ -44,15 +55,30 @@ export default function RegisterPage() {
         </div>
         <div className="login-field">
           <label>📧 Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email@example.com" />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="email@example.com"
+          />
         </div>
         <div className="login-field">
           <label>🔑 Пароль</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Минимум 8 символов" />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Минимум 8 символов"
+          />
         </div>
         <div className="login-field">
           <label>🔑 Подтверди пароль</label>
-          <input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="Ещё раз" />
+          <input
+            type="password"
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+            placeholder="Ещё раз"
+          />
         </div>
         {(validError || error) && <p className="login-error">{validError || error}</p>}
         <button type="submit" className="btn-green login-submit" disabled={loading}>

@@ -51,7 +51,10 @@ export const updateProfile = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
   'auth/changePassword',
-  async ({ oldPassword, newPassword }: { oldPassword: string; newPassword: string }, { getState }) => {
+  async (
+    { oldPassword, newPassword }: { oldPassword: string; newPassword: string },
+    { getState },
+  ) => {
     const { changeUserPassword } = await import('../api/authApi');
     const state = getState() as { auth: AuthState };
     return changeUserPassword(state.auth.accessToken ?? '', oldPassword, newPassword);

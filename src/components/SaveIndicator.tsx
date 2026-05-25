@@ -14,9 +14,5 @@ export default function SaveIndicator() {
 
   const info = map[saveStatus];
 
-  return (
-    <div className={`save-indicator ${info.className}`}>
-      {info.text}
-    </div>
-  );
+  return <div className={`save-indicator ${info.className}`}>{info.text}</div>;
 }

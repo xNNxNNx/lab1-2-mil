@@ -46,10 +46,7 @@ const spreadsheetSlice = createSlice({
       state.cells[key] = { ...existing, value, computed };
     },
 
-    setCellFormat(
-      state,
-      action: PayloadAction<{ key: CellKey; format: Partial<CellData> }>,
-    ) {
+    setCellFormat(state, action: PayloadAction<{ key: CellKey; format: Partial<CellData> }>) {
       const { key, format } = action.payload;
       const existing = state.cells[key] ?? getDefaultCell();
       state.cells[key] = { ...existing, ...format };
@@ -155,10 +152,7 @@ const spreadsheetSlice = createSlice({
       }
     },
 
-    loadSheet(
-      state,
-      action: PayloadAction<{ cells: SheetData; rows: number; cols: number }>,
-    ) {
+    loadSheet(state, action: PayloadAction<{ cells: SheetData; rows: number; cols: number }>) {
       state.cells = action.payload.cells;
       state.rows = action.payload.rows;
       state.cols = action.payload.cols;

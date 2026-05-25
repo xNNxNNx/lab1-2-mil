@@ -14,7 +14,8 @@ export default function useHotkeys() {
     const handler = (e: KeyboardEvent) => {
       if (isEditing) return;
 
-      const keys = selectedRange && selectedRange.length > 0 ? selectedRange : activeKey ? [activeKey] : [];
+      const keys =
+        selectedRange && selectedRange.length > 0 ? selectedRange : activeKey ? [activeKey] : [];
       if (keys.length === 0 && !e.ctrlKey) return;
 
       if (e.ctrlKey && e.key === 'b') {

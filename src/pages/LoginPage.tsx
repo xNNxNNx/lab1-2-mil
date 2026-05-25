@@ -41,20 +41,27 @@ export default function LoginPage() {
         <div className="login-deco">🕷️</div>
         <h1 className="login-title">
           <span style={{ color: 'var(--rainbow-blue)' }}>Привет!</span>{' '}
-          <span style={{ color: 'var(--rainbow-green)' }}>Заходи</span>{' '}
-          👋😊
+          <span style={{ color: 'var(--rainbow-green)' }}>Заходи</span> 👋😊
         </h1>
         <div className="login-field">
           <label>📧 Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email@example.com" />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="email@example.com"
+          />
         </div>
         <div className="login-field">
           <label>🔑 Пароль</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Минимум 8 символов" />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Минимум 8 символов"
+          />
         </div>
-        {(validError || error) && (
-          <p className="login-error">{validError || error}</p>
-        )}
+        {(validError || error) && <p className="login-error">{validError || error}</p>}
         <button type="submit" className="btn-blue login-submit" disabled={loading}>
           {loading ? '⏳ Входим...' : '🚀 Войти'}
         </button>

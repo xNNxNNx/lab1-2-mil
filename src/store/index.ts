@@ -12,8 +12,7 @@ export const store = configureStore({
     ui: uiReducer,
     auth: authReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(autoSaveMiddleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(autoSaveMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
