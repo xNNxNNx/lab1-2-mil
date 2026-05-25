@@ -16,6 +16,7 @@ import { exportToCSV, exportToJSON, importCSV } from '../utils/csv';
 import Table from '../components/Table/Table';
 import FormattingToolbar from '../components/FormattingToolbar';
 import SaveIndicator from '../components/SaveIndicator';
+import RunawayButton from '../components/RunawayButton';
 import useHotkeys from '../hooks/useHotkeys';
 import './SpreadsheetPage.css';
 
@@ -105,17 +106,18 @@ export default function SpreadsheetPage() {
   return (
     <div className="spreadsheet-page">
       <div className="export-bar">
-        <button className="btn-blue" onClick={handleExportCSV}>
+        <RunawayButton className="btn-blue" onClick={handleExportCSV} maxRuns={3}>
           📥 Скачать CSV
-        </button>
-        <button className="btn-green" onClick={handleExportJSON}>
+        </RunawayButton>
+        <RunawayButton className="btn-green" onClick={handleExportJSON} maxRuns={2}>
           📥 Скачать JSON
-        </button>
+        </RunawayButton>
         <button className="btn-yellow" onClick={() => fileInputRef.current?.click()}>
           📤 Загрузить CSV
         </button>
         <input ref={fileInputRef} type="file" accept=".csv" onChange={handleImportCSV} hidden />
-        <span className="export-label rotated-label">экспортируй данные куда хочешь! 🌍💫</span>
+        <span className="export-label rotated-label wiggle">экспортируй данные куда хочешь! 🌍💫</span>
+        <span className="sticker">🦄</span>
       </div>
       <FormattingToolbar />
       <SaveIndicator />

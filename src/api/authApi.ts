@@ -29,6 +29,14 @@ function saveUsers(users: StoredUser[]) {
   localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 
+function generateId(): string {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
 function makeToken(userId: string, expiresIn: number): string {
   return btoa(JSON.stringify({ userId, exp: Date.now() + expiresIn }));
 }
@@ -48,7 +56,7 @@ export async function register(
   }
 
   const user: StoredUser = {
-    id: crypto.randomUUID(),
+    id: generateId(),
     name,
     email,
     password,

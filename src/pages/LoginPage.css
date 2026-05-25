@@ -4,76 +4,92 @@
   justify-content: center;
   min-height: 100vh;
   background: var(--bg-main);
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(119, 221, 119, 0.05) 0%, transparent 70%);
 }
 
 .login-form {
   background: #fff;
-  border: 3px solid transparent;
-  border-image: linear-gradient(
-      135deg,
-      var(--rainbow-yellow),
-      var(--rainbow-blue),
-      var(--rainbow-red),
-      var(--rainbow-green)
-    )
-    1;
-  padding: 36px;
-  width: 380px;
+  border: 4px solid var(--rainbow-green);
+  border-radius: 30px;
+  padding: 44px;
+  width: 420px;
   position: relative;
+  box-shadow: 8px 8px 0 var(--rainbow-yellow), 16px 16px 0 var(--rainbow-blue);
 }
 
 .login-deco {
   position: absolute;
-  top: -10px;
-  right: -10px;
-  font-size: 28px;
+  top: -20px;
+  right: -20px;
+  font-size: 42px;
   transform: rotate(15deg);
+  animation: float 3s ease-in-out infinite;
 }
 
 .login-title {
   font-family: var(--font-title);
-  font-size: 28px;
+  font-size: 36px;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .login-field {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .login-field label {
   display: block;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
 .login-field input {
   width: 100%;
+  font-size: 16px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 3px solid #eee;
+}
+
+.login-field input:focus {
+  border-color: var(--rainbow-blue);
+  box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
 }
 
 .login-error {
   color: var(--rainbow-red);
-  font-size: 13px;
+  font-size: 15px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  font-weight: 600;
 }
 
 .login-submit {
   width: 100%;
-  font-size: 16px;
-  padding: 12px;
+  font-size: 20px;
+  padding: 16px;
   font-family: var(--font-title);
-  letter-spacing: 1px;
-  margin-bottom: 14px;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  border-radius: 18px;
+  box-shadow: 3px 3px 0 var(--rainbow-yellow);
+}
+
+.login-submit:hover {
+  box-shadow: 5px 5px 0 var(--rainbow-red);
 }
 
 .login-link {
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .login-link a {
   color: var(--rainbow-green);
-  font-weight: 600;
+  font-weight: 700;
+  text-decoration: underline wavy;
 }

@@ -32,9 +32,16 @@ export default function DashboardPage() {
     <div className="dashboard">
       <h1 className="dashboard__title spider-title">Мои таблички 📋</h1>
       <p className="dashboard__subtitle">тут живут твои документы 🏠✨</p>
+      <div className="dashboard__stickers">
+        <span className="float-emoji">🌈</span>{' '}
+        <span className="float-emoji" style={{ animationDelay: '0.5s' }}>⭐</span>{' '}
+        <span className="float-emoji" style={{ animationDelay: '1s' }}>🎈</span>{' '}
+        <span className="float-emoji" style={{ animationDelay: '1.5s' }}>🦋</span>{' '}
+        <span className="float-emoji" style={{ animationDelay: '2s' }}>🍭</span>
+      </div>
 
       <button className="btn-green dashboard__create" onClick={() => dispatch(openCreateModal())}>
-        Создать новую табличку ➕
+        Создать новую табличку ➕🎉
       </button>
 
       {loading && <p className="dashboard__loading">Загрузка... ⏳</p>}

@@ -1,6 +1,7 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logoutUser } from '../../store/authSlice';
+import RunawayButton from '../RunawayButton';
 import Breadcrumbs from './Breadcrumbs';
 import './AppLayout.css';
 
@@ -17,7 +18,7 @@ export default function AppLayout() {
   return (
     <div className="app-layout">
       <header className="app-header">
-        <h1 className="app-logo spider-title">🕷️ Табличкин</h1>
+        <h1 className="app-logo spider-title wiggle">🕷️ Табличкин</h1>
         <nav className="app-nav">
           <NavLink to="/dashboard" className="app-nav__link">
             📋 Мои таблички
@@ -27,17 +28,17 @@ export default function AppLayout() {
           </NavLink>
         </nav>
         <div className="app-header__user">
-          <span>😊 {user?.name || 'Гость'}</span>
-          <button className="btn-red app-header__logout" onClick={handleLogout}>
+          <span className="float-emoji">😊</span> {user?.name || 'Гость'}
+          <RunawayButton className="btn-red app-header__logout" onClick={handleLogout} maxRuns={4}>
             🚪 Выйти
-          </button>
+          </RunawayButton>
         </div>
       </header>
       <Breadcrumbs />
       <main className="app-main">
         <Outlet />
       </main>
-      <div className="app-sidebar-hint rotated-label">удачи в работе! 🍀💪</div>
+      <div className="app-sidebar-hint rotated-label wiggle">удачи в работе! 🍀💪</div>
     </div>
   );
 }
