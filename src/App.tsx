@@ -1,91 +1,44 @@
-import { useState, useCallback } from 'react';
-import type { SheetData, ColumnWidths, RowHeights } from './types';
-import { getCellKey, parseCellKey } from './utils/cellHelpers';
+import { useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import {
+  setCellValue,
+  addRow,
+  removeRow,
+  addColumn,
+  removeColumn,
+  setColumnWidth,
+  setRowHeight,
+} from './store/spreadsheetSlice';
+import type { SheetData } from './types';
 import Table from './components/Table/Table';
 import './App.css';
 
 function App() {
-  const [rows, setRows] = useState(100);
-  const [cols, setCols] = useState(26);
-  const [cells, setCells] = useState<SheetData>({});
-  const [columnWidths, setColumnWidths] = useState<ColumnWidths>({});
-  const [rowHeights, setRowHeights] = useState<RowHeights>({});
+  const dispatch = useAppDispatch();
+  const { cells, rows, cols, columnWidths, rowHeights } = useAppSelector(
+    (s) => s.spreadsheet,
+  );
 
-  const handleColumnWidthChange = useCallback((col: number, width: number) => {
-    setColumnWidths((prev) => ({ ...prev, [col]: width }));
-  }, []);
-
-  const handleRowHeightChange = useCallback((row: number, height: number) => {
-    setRowHeights((prev) => ({ ...prev, [row]: height }));
-  }, []);
-
-  const handleAddRow = useCallback((afterIndex: number) => {
-    const insertAt = afterIndex + 1;
-    setCells((prev) => {
-      const newCells: SheetData = {};
-      for (const [key, val] of Object.entries(prev)) {
-        const parsed = parseCellKey(key);
-        if (parsed.row >= insertAt) {
-          newCells[getCellKey(parsed.row + 1, parsed.col)] = val;
-        } else {
-          newCells[key] = val;
+  const handleCellsChange = useCallback(
+    (newCells: SheetData) => {
+      for (const [key, cell] of Object.entries(newCells)) {
+        if (!cells[key] || cells[key].value !== cell.value) {
+          dispatch(setCellValue({ key, value: cell.value }));
         }
       }
-      return newCells;
-    });
-    setRows((r) => r + 1);
-  }, []);
+    },
+    [cells, dispatch],
+  );
 
-  const handleRemoveRow = useCallback((index: number) => {
-    setCells((prev) => {
-      const newCells: SheetData = {};
-      for (const [key, val] of Object.entries(prev)) {
-        const parsed = parseCellKey(key);
-        if (parsed.row === index) continue;
-        if (parsed.row > index) {
-          newCells[getCellKey(parsed.row - 1, parsed.col)] = val;
-        } else {
-          newCells[key] = val;
-        }
-      }
-      return newCells;
-    });
-    setRows((r) => Math.max(1, r - 1));
-  }, []);
+  const handleColumnWidthChange = useCallback(
+    (col: number, width: number) => dispatch(setColumnWidth({ col, width })),
+    [dispatch],
+  );
 
-  const handleAddCol = useCallback((afterIndex: number) => {
-    const insertAt = afterIndex + 1;
-    setCells((prev) => {
-      const newCells: SheetData = {};
-      for (const [key, val] of Object.entries(prev)) {
-        const parsed = parseCellKey(key);
-        if (parsed.col >= insertAt) {
-          newCells[getCellKey(parsed.row, parsed.col + 1)] = val;
-        } else {
-          newCells[key] = val;
-        }
-      }
-      return newCells;
-    });
-    setCols((c) => c + 1);
-  }, []);
-
-  const handleRemoveCol = useCallback((index: number) => {
-    setCells((prev) => {
-      const newCells: SheetData = {};
-      for (const [key, val] of Object.entries(prev)) {
-        const parsed = parseCellKey(key);
-        if (parsed.col === index) continue;
-        if (parsed.col > index) {
-          newCells[getCellKey(parsed.row, parsed.col - 1)] = val;
-        } else {
-          newCells[key] = val;
-        }
-      }
-      return newCells;
-    });
-    setCols((c) => Math.max(1, c - 1));
-  }, []);
+  const handleRowHeightChange = useCallback(
+    (row: number, height: number) => dispatch(setRowHeight({ row, height })),
+    [dispatch],
+  );
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -93,15 +46,15 @@ function App() {
         rows={rows}
         cols={cols}
         cells={cells}
-        onCellsChange={setCells}
+        onCellsChange={handleCellsChange}
         columnWidths={columnWidths}
         rowHeights={rowHeights}
         onColumnWidthChange={handleColumnWidthChange}
         onRowHeightChange={handleRowHeightChange}
-        onAddRow={handleAddRow}
-        onRemoveRow={handleRemoveRow}
-        onAddCol={handleAddCol}
-        onRemoveCol={handleRemoveCol}
+        onAddRow={(afterIndex) => dispatch(addRow(afterIndex))}
+        onRemoveRow={(index) => dispatch(removeRow(index))}
+        onAddCol={(afterIndex) => dispatch(addColumn(afterIndex))}
+        onRemoveCol={(index) => dispatch(removeColumn(index))}
       />
     </div>
   );
