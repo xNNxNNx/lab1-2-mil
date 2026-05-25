@@ -1,0 +1,15 @@
+.breadcrumbs {
+  padding: 8px 24px;
+  font-size: 13px;
+  color: #777;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+
+.breadcrumbs__sep {
+  margin: 0 2px;
+}
+
+.breadcrumbs__item {
+  font-weight: 500;
+}

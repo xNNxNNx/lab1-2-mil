@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchDocuments, createDocument, deleteDocument, renameDocument, duplicateDocument } from '../store/documentsSlice';
 import { openCreateModal, closeCreateModal } from '../store/uiSlice';
@@ -6,19 +7,19 @@ import DocumentCard from '../components/DocumentCard';
 import CreateDocModal from '../components/CreateDocModal';
 import './DashboardPage.css';
 
-const MOCK_USER_ID = 'mock-user-id';
-
 export default function DashboardPage() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { list, loading } = useAppSelector((s) => s.documents);
   const showCreateModal = useAppSelector((s) => s.ui.showCreateModal);
+  const userId = useAppSelector((s) => s.auth.user?.id ?? 'mock-user-id');
 
   useEffect(() => {
-    dispatch(fetchDocuments(MOCK_USER_ID));
-  }, [dispatch]);
+    dispatch(fetchDocuments(userId));
+  }, [dispatch, userId]);
 
   const handleCreate = (title: string, rows: number, cols: number) => {
-    dispatch(createDocument({ title, rows, cols, cells: {}, userId: MOCK_USER_ID }));
+    dispatch(createDocument({ title, rows, cols, cells: {}, userId }));
   };
 
   return (
@@ -41,7 +42,7 @@ export default function DashboardPage() {
           <DocumentCard
             key={doc.id}
             doc={doc}
-            onOpen={() => { /* will navigate later with router */ }}
+            onOpen={() => navigate(`/documents/${doc.id}`)}
             onRename={(title) => dispatch(renameDocument({ id: doc.id, title }))}
             onDuplicate={() => dispatch(duplicateDocument(doc.id))}
             onDelete={() => dispatch(deleteDocument(doc.id))}

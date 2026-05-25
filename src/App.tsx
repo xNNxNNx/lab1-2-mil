@@ -1,62 +1,31 @@
-import { useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import {
-  setCellValue,
-  addRow,
-  removeRow,
-  addColumn,
-  removeColumn,
-  setColumnWidth,
-  setRowHeight,
-} from './store/spreadsheetSlice';
-import type { SheetData } from './types';
-import Table from './components/Table/Table';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import AppLayout from './components/Layout/AppLayout';
+import ProtectedRoute from './components/Auth/ProtectedRoute';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPage';
+import SpreadsheetPage from './pages/SpreadsheetPage';
+import ProfilePage from './pages/ProfilePage';
+import NotFoundPage from './pages/NotFoundPage';
 import './App.css';
 
 function App() {
-  const dispatch = useAppDispatch();
-  const { cells, rows, cols, columnWidths, rowHeights } = useAppSelector(
-    (s) => s.spreadsheet,
-  );
-
-  const handleCellsChange = useCallback(
-    (newCells: SheetData) => {
-      for (const [key, cell] of Object.entries(newCells)) {
-        if (!cells[key] || cells[key].value !== cell.value) {
-          dispatch(setCellValue({ key, value: cell.value }));
-        }
-      }
-    },
-    [cells, dispatch],
-  );
-
-  const handleColumnWidthChange = useCallback(
-    (col: number, width: number) => dispatch(setColumnWidth({ col, width })),
-    [dispatch],
-  );
-
-  const handleRowHeightChange = useCallback(
-    (row: number, height: number) => dispatch(setRowHeight({ row, height })),
-    [dispatch],
-  );
-
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Table
-        rows={rows}
-        cols={cols}
-        cells={cells}
-        onCellsChange={handleCellsChange}
-        columnWidths={columnWidths}
-        rowHeights={rowHeights}
-        onColumnWidthChange={handleColumnWidthChange}
-        onRowHeightChange={handleRowHeightChange}
-        onAddRow={(afterIndex) => dispatch(addRow(afterIndex))}
-        onRemoveRow={(index) => dispatch(removeRow(index))}
-        onAddCol={(afterIndex) => dispatch(addColumn(afterIndex))}
-        onRemoveCol={(index) => dispatch(removeColumn(index))}
-      />
-    </div>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AppLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/documents/:id" element={<SpreadsheetPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
+      </Route>
+
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 
