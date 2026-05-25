@@ -20,9 +20,10 @@ export async function getDocuments(userId: string): Promise<SpreadsheetDocument[
   return delay(docs);
 }
 
-export async function getDocument(id: string): Promise<SpreadsheetDocument> {
+export async function getDocument(id: string, userId?: string): Promise<SpreadsheetDocument> {
   const doc = loadDocs().find((d) => d.id === id);
   if (!doc) throw new Error('Документ не найден 😔');
+  if (userId && doc.userId !== userId) throw new Error('403: 🚫 Это не твой документ!');
   return delay(doc);
 }
 
@@ -46,10 +47,12 @@ export async function createDoc(
 export async function updateDocument(
   id: string,
   patch: Partial<SpreadsheetDocument>,
+  userId?: string,
 ): Promise<SpreadsheetDocument> {
   const docs = loadDocs();
   const idx = docs.findIndex((d) => d.id === id);
   if (idx < 0) throw new Error('Документ не найден 😔');
+  if (userId && docs[idx].userId !== userId) throw new Error('403: 🚫 Это не твой документ!');
   docs[idx] = { ...docs[idx], ...patch, updatedAt: new Date().toISOString() };
   saveDocs(docs);
   return delay(docs[idx]);

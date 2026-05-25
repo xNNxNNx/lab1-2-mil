@@ -1,5 +1,7 @@
-import { useState, useCallback, useRef, useMemo } from 'react';
+import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 import type { SheetData, ColumnWidths, RowHeights } from '../../types';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setSelection, startEditing, stopEditing } from '../../store/spreadsheetSlice';
 import {
   colIndexToLetter,
   getCellKey,
@@ -57,9 +59,11 @@ export default function Table({
   onAddCol,
   onRemoveCol,
 }: TableProps) {
-  const [activeCell, setActiveCell] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const selection = useAppSelector((s) => s.spreadsheet.selection);
+  const editingCell = useAppSelector((s) => s.spreadsheet.editingCell);
+  const activeCell = selection.active;
   const [rangeStart, setRangeStart] = useState<string | null>(null);
-  const [rangeKeys, setRangeKeys] = useState<string[]>([]);
   const [formulaValue, setFormulaValue] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollTop, setScrollTop] = useState(0);
@@ -70,6 +74,15 @@ export default function Table({
     row: number;
     col: number;
   } | null>(null);
+
+  useEffect(() => {
+    if (!activeCell) {
+      setFormulaValue('');
+      return;
+    }
+
+    setFormulaValue(cells[activeCell]?.value ?? '');
+  }, [activeCell, cells]);
 
   const handleContextMenu = useCallback(
     (e: React.MouseEvent) => {
@@ -154,16 +167,15 @@ export default function Table({
             keys.push(getCellKey(r, c));
           }
         }
-        setRangeKeys(keys);
+        dispatch(setSelection({ active: key, range: keys }));
       } else {
         setRangeStart(key);
-        setRangeKeys([]);
+        dispatch(setSelection({ active: key, range: null }));
       }
-      setActiveCell(key);
       const cell = cells[key];
       setFormulaValue(cell?.value ?? '');
     },
-    [cells, rangeStart],
+    [cells, dispatch, rangeStart],
   );
 
   const handleEdit = useCallback(
@@ -184,7 +196,7 @@ export default function Table({
     }
   }, [activeCell, formulaValue, handleEdit]);
 
-  const rangeSet = useMemo(() => new Set(rangeKeys), [rangeKeys]);
+  const rangeSet = useMemo(() => new Set(selection.range ?? []), [selection.range]);
 
   return (
     <div className="table-wrapper">
@@ -253,6 +265,9 @@ export default function Table({
                         height={rh}
                         onSelect={handleSelect}
                         onEdit={handleEdit}
+                        shouldEdit={editingCell === key}
+                        onStartEditing={() => dispatch(startEditing(key))}
+                        onStopEditing={() => dispatch(stopEditing())}
                       />
                     );
                   })}

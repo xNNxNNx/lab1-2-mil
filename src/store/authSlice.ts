@@ -40,6 +40,15 @@ export const refreshToken = createAsyncThunk('auth/refresh', async () => {
   return refresh(token);
 });
 
+export const restoreSession = createAsyncThunk('auth/restoreSession', async () => {
+  const { refresh, getProfile } = await import('../api/authApi');
+  const token = localStorage.getItem('refreshToken');
+  if (!token) throw new Error('Нет refresh токена');
+  const { accessToken } = await refresh(token);
+  const user = await getProfile(accessToken);
+  return { accessToken, user };
+});
+
 export const updateProfile = createAsyncThunk(
   'auth/updateProfile',
   async ({ name }: { name: string }, { getState }) => {
@@ -110,6 +119,24 @@ const authSlice = createSlice({
       })
       .addCase(refreshToken.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
+      })
+      .addCase(restoreSession.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(restoreSession.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.accessToken = action.payload.accessToken;
+        state.isAuthenticated = true;
+      })
+      .addCase(restoreSession.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? 'Ошибка восстановления сессии';
+        state.user = null;
+        state.accessToken = null;
+        state.isAuthenticated = false;
+        localStorage.removeItem('refreshToken');
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.user = action.payload;

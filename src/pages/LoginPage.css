@@ -17,7 +17,9 @@
   padding: 44px;
   width: 420px;
   position: relative;
-  box-shadow: 8px 8px 0 var(--rainbow-yellow), 16px 16px 0 var(--rainbow-blue);
+  box-shadow:
+    8px 8px 0 var(--rainbow-yellow),
+    16px 16px 0 var(--rainbow-blue);
 }
 
 .login-deco {

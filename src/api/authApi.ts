@@ -45,6 +45,12 @@ function decodeToken(token: string): { userId: string; exp: number } {
   return JSON.parse(atob(token));
 }
 
+function decodeValidToken(token: string): { userId: string; exp: number } {
+  const decoded = decodeToken(token);
+  if (Date.now() > decoded.exp) throw new Error('Access токен истёк');
+  return decoded;
+}
+
 export async function register(
   name: string,
   email: string,
@@ -91,7 +97,7 @@ export async function refresh(refreshToken: string): Promise<{ accessToken: stri
 }
 
 export async function getProfile(accessToken: string): Promise<User> {
-  const decoded = decodeToken(accessToken);
+  const decoded = decodeValidToken(accessToken);
   const users = loadUsers();
   const user = users.find((u) => u.id === decoded.userId);
   if (!user) throw new Error('Пользователь не найден');
@@ -104,7 +110,7 @@ export async function getProfile(accessToken: string): Promise<User> {
 }
 
 export async function updateUserProfile(accessToken: string, name: string): Promise<User> {
-  const decoded = decodeToken(accessToken);
+  const decoded = decodeValidToken(accessToken);
   const users = loadUsers();
   const idx = users.findIndex((u) => u.id === decoded.userId);
   if (idx < 0) throw new Error('Пользователь не найден');
@@ -123,7 +129,7 @@ export async function changeUserPassword(
   oldPassword: string,
   newPassword: string,
 ): Promise<void> {
-  const decoded = decodeToken(accessToken);
+  const decoded = decodeValidToken(accessToken);
   const users = loadUsers();
   const idx = users.findIndex((u) => u.id === decoded.userId);
   if (idx < 0) throw new Error('Пользователь не найден');

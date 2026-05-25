@@ -11,6 +11,9 @@ interface CellProps {
   height: number;
   onSelect: (key: string, shift: boolean) => void;
   onEdit: (key: string, value: string) => void;
+  shouldEdit?: boolean;
+  onStartEditing?: () => void;
+  onStopEditing?: () => void;
 }
 
 const Cell = memo(function Cell({
@@ -22,10 +25,14 @@ const Cell = memo(function Cell({
   height,
   onSelect,
   onEdit,
+  shouldEdit = false,
+  onStartEditing,
+  onStopEditing,
 }: CellProps) {
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const handledEditRequestRef = useRef(false);
 
   useEffect(() => {
     if (editing && inputRef.current) {
@@ -33,19 +40,32 @@ const Cell = memo(function Cell({
     }
   }, [editing]);
 
+  useEffect(() => {
+    if (shouldEdit && !handledEditRequestRef.current && !editing) {
+      setEditValue(data?.value ?? '');
+      setEditing(true);
+    }
+
+    handledEditRequestRef.current = shouldEdit;
+  }, [data?.value, editing, shouldEdit]);
+
+  const startLocalEditing = () => {
+    setEditValue(data?.value ?? '');
+    setEditing(true);
+    onStartEditing?.();
+  };
+
   const handleClick = (e: React.MouseEvent) => {
     onSelect(cellKey, e.shiftKey);
   };
 
   const handleDoubleClick = () => {
-    setEditValue(data?.value ?? '');
-    setEditing(true);
+    startLocalEditing();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!editing && e.key === 'Enter') {
-      setEditValue(data?.value ?? '');
-      setEditing(true);
+      startLocalEditing();
       e.preventDefault();
     }
   };
@@ -53,6 +73,7 @@ const Cell = memo(function Cell({
   const commitEdit = () => {
     onEdit(cellKey, editValue);
     setEditing(false);
+    onStopEditing?.();
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
@@ -60,10 +81,27 @@ const Cell = memo(function Cell({
       commitEdit();
     } else if (e.key === 'Escape') {
       setEditing(false);
+      onStopEditing?.();
     }
   };
 
-  const displayValue = data?.computed || data?.value || '';
+  const formatDisplayValue = () => {
+    const raw = data?.computed || data?.value || '';
+    if (!data || raw === '') return raw;
+
+    const number = Number(raw);
+    if (data.format === 'number' && !Number.isNaN(number)) return String(number);
+    if (data.format === 'percent' && !Number.isNaN(number)) return `${number * 100}%`;
+    if (data.format === 'currency' && !Number.isNaN(number)) return `${number} руб.`;
+    if (data.format === 'date') {
+      const date = Number.isNaN(number) ? new Date(raw) : new Date(number);
+      if (!Number.isNaN(date.getTime())) return date.toLocaleDateString('ru-RU');
+    }
+
+    return raw;
+  };
+
+  const displayValue = formatDisplayValue();
 
   const cellStyle: React.CSSProperties = {
     width,

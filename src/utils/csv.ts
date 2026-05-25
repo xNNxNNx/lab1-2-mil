@@ -26,21 +26,51 @@ export function exportToJSON(doc: SpreadsheetDocument): string {
   return JSON.stringify(doc, null, 2);
 }
 
+function parseCSVLine(line: string): string[] {
+  const values: string[] = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const next = line[i + 1];
+
+    if (char === '"' && inQuotes && next === '"') {
+      current += '"';
+      i++;
+      continue;
+    }
+
+    if (char === '"') {
+      inQuotes = !inQuotes;
+      continue;
+    }
+
+    if (char === ',' && !inQuotes) {
+      values.push(current);
+      current = '';
+      continue;
+    }
+
+    current += char;
+  }
+
+  values.push(current);
+  return values;
+}
+
 export function importCSV(csvString: string): { cells: SheetData; rows: number; cols: number } {
-  const lines = csvString.trim().split('\n');
+  const lines = csvString.trim().split(/\r?\n/);
   if (lines.length === 0) return { cells: {}, rows: 0, cols: 0 };
 
   const cells: SheetData = {};
   let maxCols = 0;
 
   for (let r = 0; r < lines.length; r++) {
-    const values = lines[r].split(',');
+    const values = parseCSVLine(lines[r]);
     maxCols = Math.max(maxCols, values.length);
     for (let c = 0; c < values.length; c++) {
-      const val = values[c]
-        .trim()
-        .replace(/^"(.*)"$/, '$1')
-        .replace(/""/g, '"');
+      const val = values[c].trim();
       if (val) {
         const key = getCellKey(r, c);
         cells[key] = { ...getDefaultCell(), value: val, computed: val };

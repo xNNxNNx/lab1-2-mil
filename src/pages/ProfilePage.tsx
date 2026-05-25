@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { updateProfile, changePassword } from '../store/authSlice';
+import { fetchDocuments } from '../store/documentsSlice';
 import './ProfilePage.css';
 
 export default function ProfilePage() {
@@ -13,6 +14,13 @@ export default function ProfilePage() {
   const [newPass, setNewPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [msg, setMsg] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchDocuments(user.id));
+      setName(user.name);
+    }
+  }, [dispatch, user]);
 
   const handleNameSave = async () => {
     if (!name.trim()) return;

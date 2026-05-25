@@ -1,11 +1,25 @@
 import type { CellData } from '../types';
 
 export function colIndexToLetter(index: number): string {
-  return String.fromCharCode(65 + index);
+  let result = '';
+  let value = index + 1;
+
+  while (value > 0) {
+    const remainder = (value - 1) % 26;
+    result = String.fromCharCode(65 + remainder) + result;
+    value = Math.floor((value - 1) / 26);
+  }
+
+  return result;
 }
 
 export function letterToColIndex(letter: string): number {
-  return letter.toUpperCase().charCodeAt(0) - 65;
+  return (
+    letter
+      .toUpperCase()
+      .split('')
+      .reduce((acc, char) => acc * 26 + char.charCodeAt(0) - 64, 0) - 1
+  );
 }
 
 export function getCellKey(row: number, col: number): string {
@@ -13,7 +27,7 @@ export function getCellKey(row: number, col: number): string {
 }
 
 export function parseCellKey(key: string): { row: number; col: number } {
-  const match = key.match(/^([A-Z])(\d+)$/);
+  const match = key.match(/^([A-Z]+)(\d+)$/);
   if (!match) return { row: 0, col: 0 };
   return {
     col: letterToColIndex(match[1]),

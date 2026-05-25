@@ -26,6 +26,7 @@ export default function DashboardPage() {
 
   const handleCreate = (title: string, rows: number, cols: number) => {
     dispatch(createDocument({ title, rows, cols, cells: {}, userId }));
+    dispatch(closeCreateModal());
   };
 
   return (
@@ -34,10 +35,18 @@ export default function DashboardPage() {
       <p className="dashboard__subtitle">тут живут твои документы 🏠✨</p>
       <div className="dashboard__stickers">
         <span className="float-emoji">🌈</span>{' '}
-        <span className="float-emoji" style={{ animationDelay: '0.5s' }}>⭐</span>{' '}
-        <span className="float-emoji" style={{ animationDelay: '1s' }}>🎈</span>{' '}
-        <span className="float-emoji" style={{ animationDelay: '1.5s' }}>🦋</span>{' '}
-        <span className="float-emoji" style={{ animationDelay: '2s' }}>🍭</span>
+        <span className="float-emoji" style={{ animationDelay: '0.5s' }}>
+          ⭐
+        </span>{' '}
+        <span className="float-emoji" style={{ animationDelay: '1s' }}>
+          🎈
+        </span>{' '}
+        <span className="float-emoji" style={{ animationDelay: '1.5s' }}>
+          🦋
+        </span>{' '}
+        <span className="float-emoji" style={{ animationDelay: '2s' }}>
+          🍭
+        </span>
       </div>
 
       <button className="btn-green dashboard__create" onClick={() => dispatch(openCreateModal())}>

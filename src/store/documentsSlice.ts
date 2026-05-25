@@ -20,10 +20,13 @@ export const fetchDocuments = createAsyncThunk('documents/fetchAll', async (user
   return getDocuments(userId);
 });
 
-export const fetchDocument = createAsyncThunk('documents/fetchOne', async (id: string) => {
-  const { getDocument } = await import('../api/documentsApi');
-  return getDocument(id);
-});
+export const fetchDocument = createAsyncThunk(
+  'documents/fetchOne',
+  async ({ id, userId }: { id: string; userId: string }) => {
+    const { getDocument } = await import('../api/documentsApi');
+    return getDocument(id, userId);
+  },
+);
 
 export const createDocument = createAsyncThunk(
   'documents/create',
@@ -35,7 +38,7 @@ export const createDocument = createAsyncThunk(
 
 export const saveDocument = createAsyncThunk('documents/save', async (doc: SpreadsheetDocument) => {
   const { updateDocument } = await import('../api/documentsApi');
-  return updateDocument(doc.id, doc);
+  return updateDocument(doc.id, doc, doc.userId);
 });
 
 export const deleteDocument = createAsyncThunk('documents/delete', async (id: string) => {
@@ -55,7 +58,13 @@ export const renameDocument = createAsyncThunk(
 export const duplicateDocument = createAsyncThunk('documents/duplicate', async (id: string) => {
   const { getDocument, createDoc } = await import('../api/documentsApi');
   const original = await getDocument(id);
-  const copy = { ...original, title: `${original.title} (копия)` };
+  const copy = {
+    title: `${original.title} (копия)`,
+    rows: original.rows,
+    cols: original.cols,
+    cells: original.cells,
+    userId: original.userId,
+  };
   return createDoc(copy);
 });
 
@@ -80,6 +89,24 @@ const documentsSlice = createSlice({
       .addCase(fetchDocuments.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? 'Ошибка загрузки';
+      })
+      .addCase(fetchDocument.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchDocument.fulfilled, (state, action) => {
+        state.loading = false;
+        state.activeDocumentId = action.payload.id;
+        const idx = state.list.findIndex((d) => d.id === action.payload.id);
+        if (idx >= 0) {
+          state.list[idx] = action.payload;
+        } else {
+          state.list.push(action.payload);
+        }
+      })
+      .addCase(fetchDocument.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? 'Ошибка загрузки документа';
       })
       .addCase(createDocument.fulfilled, (state, action) => {
         state.list.push(action.payload);
