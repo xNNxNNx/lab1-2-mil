@@ -4,6 +4,7 @@ import { colIndexToLetter, getCellKey, getDefaultCell, parseCellKey } from '../.
 import { evaluateFormula } from '../../utils/formulas';
 import Cell from './Cell';
 import FormulaBar from './FormulaBar';
+import ContextMenu from './ContextMenu';
 import './Table.css';
 
 const DEFAULT_COL_WIDTH = 100;
@@ -23,6 +24,10 @@ interface TableProps {
   rowHeights: RowHeights;
   onColumnWidthChange: (col: number, width: number) => void;
   onRowHeightChange: (row: number, height: number) => void;
+  onAddRow: (afterIndex: number) => void;
+  onRemoveRow: (index: number) => void;
+  onAddCol: (afterIndex: number) => void;
+  onRemoveCol: (index: number) => void;
 }
 
 export default function Table({
@@ -34,6 +39,10 @@ export default function Table({
   rowHeights,
   onColumnWidthChange,
   onRowHeightChange,
+  onAddRow,
+  onRemoveRow,
+  onAddCol,
+  onRemoveCol,
 }: TableProps) {
   const [activeCell, setActiveCell] = useState<string | null>(null);
   const [rangeStart, setRangeStart] = useState<string | null>(null);
@@ -42,6 +51,14 @@ export default function Table({
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollTop, setScrollTop] = useState(0);
   const [containerHeight, setContainerHeight] = useState(600);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; row: number; col: number } | null>(null);
+
+  const handleContextMenu = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!activeCell) return;
+    const parsed = parseCellKey(activeCell);
+    setContextMenu({ x: e.clientX, y: e.clientY, row: parsed.row, col: parsed.col });
+  }, [activeCell]);
 
   // Ресайз столбцов
   const resizingCol = useRef<{ col: number; startX: number; startW: number } | null>(null);
@@ -155,6 +172,7 @@ export default function Table({
         className="table-container"
         ref={containerRef}
         onScroll={handleScroll}
+        onContextMenu={handleContextMenu}
       >
         <table className="spreadsheet">
           <thead>
@@ -227,6 +245,19 @@ export default function Table({
           </tbody>
         </table>
       </div>
+      {contextMenu && (
+        <ContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={() => setContextMenu(null)}
+          onAddRowAbove={() => onAddRow(contextMenu.row - 1)}
+          onAddRowBelow={() => onAddRow(contextMenu.row)}
+          onDeleteRow={() => onRemoveRow(contextMenu.row)}
+          onAddColLeft={() => onAddCol(contextMenu.col - 1)}
+          onAddColRight={() => onAddCol(contextMenu.col)}
+          onDeleteCol={() => onRemoveCol(contextMenu.col)}
+        />
+      )}
     </div>
   );
 }
