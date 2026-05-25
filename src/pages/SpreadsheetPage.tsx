@@ -16,9 +16,11 @@ import { exportToCSV, exportToJSON, importCSV } from '../utils/csv';
 import Table from '../components/Table/Table';
 import FormattingToolbar from '../components/FormattingToolbar';
 import SaveIndicator from '../components/SaveIndicator';
+import useHotkeys from '../hooks/useHotkeys';
 import './SpreadsheetPage.css';
 
 export default function SpreadsheetPage() {
+  useHotkeys();
   const dispatch = useAppDispatch();
   const { cells, rows, cols, columnWidths, rowHeights } = useAppSelector((s) => s.spreadsheet);
   const saveStatus = useAppSelector((s) => s.ui.saveStatus);
